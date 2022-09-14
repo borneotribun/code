@@ -121,7 +121,7 @@
       //]]></script>
     <b:if cond='data:post.labels'>
       <b:loop values='data:post.labels' var='label'>
-        <script expr:src='"/feeds/posts/default/-/" + data:label.name + "?alt=json-in-script&amp;callback=relpostimgcuplik&amp;max-results=25"'/>
+        <script expr:src='"https://feeds.feedburner.com/borneotribun + "?alt=json-in-script&amp;callback=relpostimgcuplik&amp;max-results=25"'/>
       </b:loop>
       <ul>
         <script>ignielRelatedGrid();</script>
