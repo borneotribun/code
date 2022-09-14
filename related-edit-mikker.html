@@ -1,48 +1,228 @@
-<html lang="id">
-<head>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>BorneoTribun</title>
+	<title>FeedWind</title>
 	<style type="text/css">
-/* related post penakhatulistiwa*/
-#related-posts h6{position:relative;font-size:18px;font-weight:600;color:#040404;line-height:1;border-left:6px solid #058387;margin:0 0 12px 0;padding:0 12px 0 6px}
-  #related-posts h6::after{content:&quot;&quot;;background:rgb(230,230,230);height:1px;width:624px;position:absolute;left:-6px;bottom:-13px}
-  #related-posts ul{overflow:hidden;margin:0 -6px;padding:12px 0 0 0}
-  .related-post{overflow:hidden;padding:12px 6px;float:left;width:33.33%;list-style:none;height:236px}
-  #related-thumb img{width:100%;height:120px;object-fit:cover;border-radius:6px;margin:0 0 12px 0}
-  .related-post-title{font-size:16px;font-weight:600;color:#040404;overflow:hidden;height:80px}
-  .related-post-title:hover{color:#00a1b0;transition:all .2s ease}
- #related-posts{padding:0 20px}
-  #related-posts ul{margin:0;padding:0}
-  #related-posts h6{font-weight:800}
-  .related-post{padding:12px 0;float:none;width:100%;height:auto;border-top:1px solid #e6e6e6}#related-thumb img{width:100px;height:100px;border-radius:6px;margin:0 0 0 12px;float:right}
-  #related-posts h6::after{display:none}
+#loading {
+	margin: 0 auto;
+	padding: 20px;
+	text-align: center;
+}
+
+#loading .fw-loader-msg {
+	font-family: arial;
+	font-size: 15px;
+	color: #848484;
+	padding-top: 5px;
+}
+
+#loading .fw-loader-msg:after {
+	content: ' .';
+	font-weight: bold;
+	-webkit-animation: dots 1s steps(5, end) infinite;
+	animation: dots 1s steps(5, end) infinite;
+}
+
+@-webkit-keyframes dots {
+
+	0%,
+	20% {
+		color: rgba(0, 0, 0, 0);
+		text-shadow:
+			.25em 0 0 rgba(0, 0, 0, 0),
+			.5em 0 0 rgba(0, 0, 0, 0);
+	}
+
+	40% {
+		color: gray;
+		text-shadow:
+			.25em 0 0 rgba(0, 0, 0, 0),
+			.5em 0 0 rgba(0, 0, 0, 0);
+	}
+
+	60% {
+		text-shadow:
+			.25em 0 0 gray,
+			.5em 0 0 rgba(0, 0, 0, 0);
+	}
+
+	80%,
+	100% {
+		text-shadow:
+			.25em 0 0 gray,
+			.5em 0 0 gray;
+	}
+}
+
+@keyframes dots {
+
+	0%,
+	20% {
+		color: rgba(0, 0, 0, 0);
+		text-shadow:
+			.25em 0 0 rgba(0, 0, 0, 0),
+			.5em 0 0 rgba(0, 0, 0, 0);
+	}
+
+	40% {
+		color: gray;
+		text-shadow:
+			.25em 0 0 rgba(0, 0, 0, 0),
+			.5em 0 0 rgba(0, 0, 0, 0);
+	}
+
+	60% {
+		text-shadow:
+			.25em 0 0 gray,
+			.5em 0 0 rgba(0, 0, 0, 0);
+	}
+
+	80%,
+	100% {
+		text-shadow:
+			.25em 0 0 gray,
+			.5em 0 0 gray;
+	}
+}
+
+#error {
+	width: 90%;
+	font-family: arial;
+	font-size: 15px;
+	line-height: 22px;
+	border: 1px solid #ccc;
+	padding: 10px 7px;
+	text-align: center;
+}
 
 	</style>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=2.0" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
+	<div id="loading" class="text-center">
+		<img src="https://feed.mikle.com/images/squares.svg?v=1580871352" alt="loading image" />
+		<div class="fw-loader-msg" style="display: none;"></div>
+	</div>
+	<div id="error-container" style="display:none;">
+		<div style="text-align: center;padding-top: 20px;border: 1px solid lightgray;padding bottom: auto;">
+			<div id="error-message-title" style="font-size: 18px;color: gray;line-height: 24px;text-transform: uppercase;"></div>
+			<div id="error-message" style="width: 100%;font-family: arial;font-size: 14px;line-height: 24px;color: gray;padding-top: 10px;padding-bottom: 20px;"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+function hasPermission() {
+	try {
+		if (sessionStorage) return true;
+		return false;
+	} catch (e) {
+		return false;
+	}
+}
 
-	
-	<script>
-//<![CDATA[
-function showrecentposts1(e){j=showRandomImg?Math.floor((imgr.length+1)*Math.random()):0,img=new Array,maxpost=numposts2<=e.feed.entry.length?numposts2:e.feed.entry.length;for(var t=0;t<maxpost;t++){var r=e.feed.entry[t];r.title.$t;if(t==e.feed.entry.length)break;for(var l=0;l<r.link.length;l++)if("alternate"==r.link[l].rel){r.link[l].href;break}for(var i,l=0;l<r.link.length;l++)if("replies"==r.link[l].rel&&"text/html"==r.link[l].type){r.link[l].title.split(" ")[0];break}i="content"in r?r.content.$t:"summary"in r?r.summary.$t:"",postdate=r.published.$t,j>imgr.length-1&&(j=0),img[t]=imgr[j],s=i,a=s.indexOf("<img"),b=s.indexOf('src="',a),c=s.indexOf('"',b+5),d=s.substr(b+5,c-b-5),-1!=a&&-1!=b&&-1!=c&&""!=d&&(img[t]=d);for(var n=[1,2,3,4,5,6,7,8,9,10,11,12],u=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"],o=(postdate.split("-")[2].substring(0,2),postdate.split("-")[1]),m=(postdate.split("-")[0],0);m<n.length;m++)if(parseInt(o)==n[m]){o=u[m];break}document.write(trtd),j++}}var relatedTitles=new Array,relatedTitlesNum=0,relatedUrls=new Array,thumburl=new Array;function related_results_labels_thumbs(e){for(var t=0;t<e.feed.entry.length;t++){var r=e.feed.entry[t];relatedTitles[relatedTitlesNum]=r.title.$t;try{thumburl[relatedTitlesNum]=r.gform_foot.url}catch(e){var l,s,a,i=document.createElement("div");i.innerHTML=r.content.$t,(s=(i.querySelector("img[src]")||i.querySelector('iframe[src*="youtube.com/embed/"]')).src)&&(0<s.search("youtube.com/embed/")?(a=((a=s.split("/embed/"))[1]||"").split(/[?&#]/))[0]&&(l="https://img.youtube.com/vi/"+a[0]+"/0.jpg"):l=s.replace(/\/[hsw]\d+(-[hsw]\d+)*(-[cp])?\//,"/s135-c/")),thumburl[relatedTitlesNum]=l||"https://1.bp.blogspot.com/-w3FKU2gysP8/XzJYl8eo2ZI/AAAAAAAAEfc/rgXY8BtLb0o9Ooh1uKrZVmx7wbHkASzqACLcBGAsYHQ/s135-c/noimage.jpg"}for(var n=0;n<r.link.length;n++)"alternate"==r.link[n].rel&&(relatedUrls[relatedTitlesNum]=r.link[n].href,relatedTitlesNum++)}}function removeRelatedDuplicates_thumbs(){for(var e=new Array(0),t=new Array(0),r=new Array(0),l=0;l<relatedUrls.length;l++)contains_thumbs(e,relatedUrls[l])||(e.length+=1,e[e.length-1]=relatedUrls[l],t.length+=1,r.length+=1,t[t.length-1]=relatedTitles[l],r[r.length-1]=thumburl[l]);relatedTitles=t,relatedUrls=e,thumburl=r}function contains_thumbs(e,t){for(var r=0;r<e.length;r++)if(e[r]==t)return!0;return!1}function printRelatedLabels_thumbs(){for(var e=0;e<relatedUrls.length;e++)relatedUrls[e]!=currentposturl&&relatedTitles[e]||(relatedUrls.splice(e,1),relatedTitles.splice(e,1),thumburl.splice(e,1),e--);var t=Math.floor((relatedTitles.length-1)*Math.random()),e=0;for(0<relatedTitles.length&&document.write("<h6>"+relatedpoststitle+"</h6>"),document.write("<ul>");e<relatedTitles.length&&e<20&&e<maxresults;)document.write('<li class="related-post"><a href="'+relatedUrls[t]+'"><div id="related-thumb"><img src="'+thumburl[t].replace(/\/([chswp]\d+)(\-[chswp]\d+)*(\-[cp])?\//g,"/w220-h124-c/")+'"/></div><div class="related-post-title">'+relatedTitles[t]+"</div></a></li>"),t<relatedTitles.length-1?t++:t=0,e++;document.write("</ul>"),relatedUrls.splice(0,relatedUrls.length),thumburl.splice(0,thumburl.length),relatedTitles.splice(0,relatedTitles.length)}
-//]]>
-</script>
+function showErrorMessage(message) {
+	$('#error-message').html(message);
+	$('#error-message-title').html("Oops! Something went wrong.");
+	$('#error-container').show();
+}
 
-<div id='related-posts'>
-        <b:loop values='data:post.labels' var='label'>
-        <b:if cond='data:blog.pageType == &quot;item&quot;'>
-        <script expr:src='&quot;https://www.borneotribun.com/feeds/posts/default?alt=rss&quot; + &quot;?alt=json-in-script&amp;callback=related_results_labels_thumbs&amp;max-results=7&quot;'/>
-        </b:if>
-        </b:loop>
-        <script type='text/javascript'>
-            var currentposturl=&quot;<data:post.url/>&quot;;
-            var maxresults=6;
-            var relatedpoststitle=&quot;<span>Lihat Lainnya</span><div class='h2border-img'/>&quot;;
-            removeRelatedDuplicates_thumbs();
-            printRelatedLabels_thumbs();
-        </script>
-    </div> 
+$(function() {
+	var _fws = {};
+	var fb_access_token = undefined;
+	var isPreview = 'false' == 'true';
+	if (isPreview && hasPermission() && sessionStorage.getItem("fws") && sessionStorage.getItem("fws").length > 0) {
+		_fws = JSON.parse(sessionStorage.getItem("fws") || {});
+		fb_access_token = sessionStorage.getItem("fb_access_token") ? sessionStorage.getItem("fb_access_token") : undefined;
+	}
+
+	var preloader_text = "";
+	var widget_parameter = _fws.widget_parameter || {};
+	if (Object.keys(widget_parameter).length > 0) {
+		var params = JSON.parse(widget_parameter);
+		if (params && params.preloader_text) {
+			preloader_text = params.preloader_text;
+		}
+	} else {
+		preloader_text = "";
+	}
+
+	if (preloader_text) {
+		$(".fw-loader-msg").text(preloader_text);
+		$(".fw-loader-msg").show();
+	}
+
+	var widget_id = 156611;
+
+	$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+		options.async = true;
+		options.xhrFields = {
+			withCredentials: true
+		};
+	});
+
+	$.get('https://feed.mikle.com/api/widget/read/body/', {
+		widget_id: widget_id,
+		widget_parameter: widget_parameter,
+		fb_access_token: fb_access_token,
+		ig_access_token:_fws.ig_access_token || 'undefined',
+		locale: _fws.locale || 'undefined'
+	}, function(data) {
+		if (data.status == 'ok') {
+			$('#loading').fadeOut('fast', function() {
+				if (data.response.expired) {
+					showErrorMessage(data.message);
+				} else {
+					$('body').html(data.response.widget);
+
+					if ($('#fw-custom-css[data-fw-css-href]')[0]) {
+						var href = $('#fw-custom-css').attr('data-fw-css-href');
+												$('#fw-custom-css').attr('href', href);
+											}
+
+					var attr_src = 'data-src';
+					if (data.response.params.item_description_style == 'card' || data.response.params.item_description_style == 'overlay') {
+						attr_src = 'src';
+					} else if (data.response.params.type == 'IG' && data.response.params.item_description_style == 'large') {
+						attr_src = 'src';
+					}
+
+					$('img[data-fw-img-src]').each(function() {
+						var src = $(this).attr('data-fw-img-src');
+						$(this).attr(attr_src, (src.match(/^http:\/\//) ? 'https://feed.mikle.com/api/proxy/' : '') + src);
+					});
+
+					function _process_image() {
+						$('img[data-fw-img-src]').each(function() {
+							if ($(this).attr('data-scale')) {
+								$(this).imageScale({
+									rescaleOnResize: true
+								});
+							}
+						});
+					}
+
+					setTimeout(function() { _process_image(); }, 100);
+				}
+			});
+		} else {
+			var target = parent.postMessage ? parent : ( parent.document.postMessage ? parent.document : undefined);
+			if (typeof target != "undefined") {
+				target.postMessage({"success": 0, "message": data.message}, "*");
+			}
+
+			$('#loading').fadeOut('fast', function() {
+				showErrorMessage(data.message);
+			});
+		}
+	}, 'json').fail(function(data) {
+		$('#loading').fadeOut('fast', function() {
+			showErrorMessage("An unexpected error occurred. Please try again later or <a href='https://feed.mikle.com/contact/' target='_blank'>contact</a> our support. (" + data.status + ": " + data.statusText + ")");
+		});
+	});
+});
+
+	</script>
 </body>
 </html>
